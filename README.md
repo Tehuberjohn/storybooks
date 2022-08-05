@@ -1,4 +1,4 @@
-# My Awesome Project
+# Storybooks app
  App to test out handlebars, uses google API for login, allows users to share stories or log private stories. Basic framework for another project.
 
 <!-- **Link to project:** http://recruiters-love-seeing-live-demos.com/ -->
