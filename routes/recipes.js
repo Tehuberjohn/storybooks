@@ -2,20 +2,20 @@ const express = require("express");
 const router = express.Router();
 const { ensureAuth } = require("../middleware/auth");
 
-const Story = require("../models/Story");
+const Recipe = require("../models/Recipe");
 
 // @desc    Show add page
-// @route   GET /stories/add
+// @route   GET /recipes/add
 router.get("/add", ensureAuth, (req, res) => {
-  res.render("stories/add");
+  res.render("recipes/add");
 });
 
 // @desc    Process add form
-// @route   POST /stories
+// @route   POST /recipes
 router.post("/", ensureAuth, async (req, res) => {
   try {
     req.body.user = req.user.id;
-    await Story.create(req.body);
+    await Recipe.create(req.body);
     res.redirect("/dashboard");
   } catch (err) {
     console.error(err);
@@ -23,17 +23,17 @@ router.post("/", ensureAuth, async (req, res) => {
   }
 });
 
-// @desc    Show all stories
-// @route   GET /stories
+// @desc    Show all recipes
+// @route   GET /recipes
 router.get("/", ensureAuth, async (req, res) => {
   try {
-    const stories = await Story.find({ status: "public" })
+    const recipes = await Recipe.find({ status: "public" })
       .populate("user")
       .sort({ createdAt: "desc" })
       .lean();
 
-    res.render("stories/index", {
-      stories,
+    res.render("recipes/index", {
+      recipes,
     });
   } catch (err) {
     console.error(err);
@@ -41,21 +41,21 @@ router.get("/", ensureAuth, async (req, res) => {
   }
 });
 
-// @desc    Show single story
-// @route   GET /stories/:id
+// @desc    Show single recipe
+// @route   GET /recipes/:id
 router.get("/:id", ensureAuth, async (req, res) => {
   try {
-    let story = await Story.findById(req.params.id).populate("user").lean();
+    let recipe = await Recipe.findById(req.params.id).populate("user").lean();
 
-    if (!story) {
+    if (!recipe) {
       return res.render("error/404");
     }
 
-    if (story.user._id != req.user.id && story.status == "private") {
+    if (recipe.user._id != req.user.id && recipe.status == "private") {
       res.render("error/404");
     } else {
-      res.render("stories/show", {
-        story,
+      res.render("recipes/show", {
+        recipe,
       });
     }
   } catch (err) {
@@ -65,22 +65,22 @@ router.get("/:id", ensureAuth, async (req, res) => {
 });
 
 // @desc    Show edit page
-// @route   GET /stories/edit/:id
+// @route   GET /recipes/edit/:id
 router.get("/edit/:id", ensureAuth, async (req, res) => {
   try {
-    const story = await Story.findOne({
+    const recipe = await Recipe.findOne({
       _id: req.params.id,
     }).lean();
 
-    if (!story) {
+    if (!recipe) {
       return res.render("error/404");
     }
 
-    if (story.user != req.user.id) {
-      res.redirect("/stories");
+    if (recipe.user != req.user.id) {
+      res.redirect("/recipes");
     } else {
-      res.render("stories/edit", {
-        story,
+      res.render("recipes/edit", {
+        recipe,
       });
     }
   } catch (err) {
@@ -89,20 +89,20 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
   }
 });
 
-// @desc    Update story
-// @route   PUT /stories/:id
+// @desc    Update recipe
+// @route   PUT /recipes/:id
 router.put("/:id", ensureAuth, async (req, res) => {
   try {
-    let story = await Story.findById(req.params.id).lean();
+    let recipe = await Recipe.findById(req.params.id).lean();
 
-    if (!story) {
+    if (!recipe) {
       return res.render("error/404");
     }
 
-    if (story.user != req.user.id) {
-      res.redirect("/stories");
+    if (recipe.user != req.user.id) {
+      res.redirect("/recipes");
     } else {
-      story = await Story.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      recipe = await Recipe.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true,
         runValidators: true,
       });
@@ -115,20 +115,20 @@ router.put("/:id", ensureAuth, async (req, res) => {
   }
 });
 
-// @desc    Delete story
-// @route   DELETE /stories/:id
+// @desc    Delete recipe
+// @route   DELETE /recipes/:id
 router.delete("/:id", ensureAuth, async (req, res) => {
   try {
-    let story = await Story.findById(req.params.id).lean();
+    let recipe = await Recipe.findById(req.params.id).lean();
 
-    if (!story) {
+    if (!recipe) {
       return res.render("error/404");
     }
 
-    if (story.user != req.user.id) {
-      res.redirect("/stories");
+    if (recipe.user != req.user.id) {
+      res.redirect("/recipes");
     } else {
-      await Story.remove({ _id: req.params.id });
+      await Recipe.remove({ _id: req.params.id });
       res.redirect("/dashboard");
     }
   } catch (err) {
@@ -137,19 +137,19 @@ router.delete("/:id", ensureAuth, async (req, res) => {
   }
 });
 
-// @desc    User stories
-// @route   GET /stories/user/:userId
+// @desc    User recipes
+// @route   GET /recipes/user/:userId
 router.get("/user/:userId", ensureAuth, async (req, res) => {
   try {
-    const stories = await Story.find({
+    const recipes = await Recipe.find({
       user: req.params.userId,
       status: "public",
     })
       .populate("user")
       .lean();
 
-    res.render("stories/index", {
-      stories,
+    res.render("recipes/index", {
+      recipes,
     });
   } catch (err) {
     console.error(err);

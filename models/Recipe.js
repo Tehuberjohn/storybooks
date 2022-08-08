@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
-const StorySchema = new mongoose.Schema({
+const RecipeSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
     trim: true,
+  },
+  ingredients: {
+    type: [String],
+    required: true,
   },
   body: {
     type: String,
@@ -25,4 +29,4 @@ const StorySchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Story", StorySchema);
+module.exports = mongoose.model("Recipe", RecipeSchema);

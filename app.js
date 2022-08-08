@@ -89,7 +89,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Routers
 app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
-app.use("/stories", require("./routes/stories"));
+app.use("/recipes", require("./routes/recipes"));
 
 app.listen(
   PORT,
