@@ -1,13 +1,71 @@
+<div class="col">
+    <div class="col s12 title">
+        <div class="col s12">
+            <h3 class="flow-text bold">{{recipe.title}}
+                <small class="flow-text">{{{editIcon recipe.user user recipe._id false}}}</small>
+            </h3>
+            <h6 class="card-title">{{formatDate recipe.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</h6>
+        </div>
+    </div>
+    <div class="row desktop">
+      <div class="col s6">
+         <div class="row">
+            <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image">
+                <img src="https://cdn.discordapp.com/attachments/933167542128758874/1004236719228473485/pexels-karolina-grabowska-4020560.jpg">
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="col s6">
+        <ul class="collection with-header">
+            <li class="collection-header "><h4 class="flow-text">Ingredients:</h4></li>
+            <div class="collection">
+                <a class="collection-item flow-text">Alvin klkjakjaslkj</a>
+                <a class="collection-item flow-text">Alvin</a>
+                <a class="collection-item flow-text">Alvin</a>
+                <a class="collection-item flow-text">Alvin</a>
+            </div>
+      </ul>
+      </div>
+    </div>
+    <div class="row mobile">
+      <div class="col s12">
+         <div class="row">
+            <div class="col s12 m12">
+            <div class="card">
+                <div class="card-image">
+                <img src="https://cdn.discordapp.com/attachments/933167542128758874/1004236719228473485/pexels-karolina-grabowska-4020560.jpg">
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+      <div class="col s12">
+        <ul class="collection with-header">
+            <li class="collection-header "><h4 class="flow-text">Ingredients:</h4></li>
+            <div class="collection">
+                <a class="collection-item flow-text">Alvin klkjakjaslkj</a>
+                <a class="collection-item flow-text">Alvin</a>
+                <a class="collection-item flow-text">Alvin</a>
+                <a class="collection-item flow-text">Alvin</a>
+            </div>
+      </ul>
+      </div>
+    </div>
+    <div class="col s12 body">
+        <div class="card recipe flow-text">
+            <div class="card-content">
+                <span>Method:</span>
+                {{{recipe.body}}}
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col s12 m8">
-        <h3>{{recipe.title}}
-            <small>{{{editIcon recipe.user user recipe._id false}}}</small>
-        </h3>
-        <div class="card recipe">
-            <div class="card-content">
-                <span class="card-title">{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</span>
-                {{{recipe.body}}}
-            </div>
         </div>
     </div>
     <div class="col s12 m4">
